@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<title> CS194 PROJECT Three </title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* {
+    font-family: 'Oxygen Mono', monospace;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+p, h3, h4, h5 {
+    margin: 0px;
+    line-height: 1.9;
+    padding: 8px 0px;
+}
+
+.link {
+    text-decoration: none;
+    padding: 1px 8px;
+    border-radius: 5px;
+    background-color: rgba(204, 204, 204, 0.591);
+    transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.link:hover {
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: rgba(113, 99, 238, 0.591);
+}
+
+.main_container {
+    margin: auto;
+    width: 1000px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.row__text {
+  margin-top: 60px;
+}
+
+.text-box {
+  width: 600px;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px 20px 0px 20px;
+}
+
+</style>
+
+<link rel="stylesheet" href="/styles/default.css">
+<script src="/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+<body>
+  <div class="main_container">
+    <h1> CS194 PROJECT Three - Alex Wu </h1>
+    <div class="row__text">
+      <h2> Defining Correspondences </h2>
+      <p> 
+        To compute the mid-way face, I have defined and labelled 110 points for my face and naval's face. 
+        I have made sure that they are created in the same order so that every point corresponds to the other points 
+        in the other image.
+      </p>
+      </div>
+      <div class="row">
+        <p style="margin: 10px"> The two original pictures and my face with points labelled. </p>
+        <img height="200px"src="me.jpg"> </img>
+        <img height="200px"src="naval.png"> </img>
+        <img height="200px"src="me_labelled.jpg"> </img>
+      </div>
+  <div>
+  <div>
+    <h2> Computing the "mid-way" faces. </h2>
+    <div class="row">
+      <p> me original image </p>
+      <p>   mid-way face </p>
+      <p> naval original image </p>
+    </div>
+    <div class="row">
+        <img height="200px"src="me.jpg"> </img>
+        <img height="200px"src="me_naval.png"> </img>
+        <img height="200px"src="naval.png"> </img>
+    </div>
+    <p> 
+        Here is the result of the mid-way face. After I labelled both faces. I calculate the average of these points.
+        Then, I created triangulation for the average points. I wrote the computeAffine function where it computes the inverse matrix so as to 
+        calculate the inverse warpping of each pixels. Next, I use a mask to apply the inverse matrix to each triangle. 
+        After inverse warpping through every triangle, we get the first face warp into the mid-way face shape. We repeat this process on the second image,
+        then we add these two images together, we get the mid-way face.
+    </p>
+  <h2> The Morph Sequence </h2>
+    <div class="row">
+    <p> To get the morph sequence of the face, I wrote the morph function, where it also takes warp_frac, dissolve_frac 
+        variables. Both variables start at zero and end at one. There are in total 45 frames that I have created, and each frame
+        last around 1/30 seconds.
+    </p>
+      <img height="250px"src="sequence_optimized.gif"> </img>
+    </div>
+    <h2> The "Mean face" of a population </h2>
+    <p>
+        I picked the Danes face dataset to calculate the mean face of a population. Here are the results that I acheive.
+        The first image is the average face of male scientists. The second image is the average face of female scientists. 
+        The third image is me warpping into the shape of average face of male scientists. The fourth image is the average 
+        face of male scientists warp into my face.
+    </p>
+    <div class="row">
+      <img height="300px"src="average_male.jpg"> </img>
+      <img height="300px"src="average_female.jpg"> </img>
+      <img height="300px"src="me2mean.png"> </img>
+      <img height="300px"src="mean2me.png"> </img>
+    </div>
+    <p> Here are some of the examples of faces warpped into the average face. </p>
+    <div class="row">
+      <img height="130px"src="e_1.png"> </img>
+      <img height="130px"src="e_2.png"> </img>
+      <img height="130px"src="e_3.png"> </img>
+      <img height="130px"src="e_4.png"> </img>
+      <img height="130px"src="e_5.png"> </img>
+      <img height="130px"src="e_6.png"> </img>
+      <img height="130px"src="e_7.png"> </img>
+      <img height="130px"src="e_8.png"> </img>
+    </div>
+    <h2> Caricatures: Extrapolating from the mean </h2>
+    <p> Here are the results when we extrapolate from the mean. The first one is the original image. I calculate the difference between that and the 
+    mean male face that I got from the last part. The second image is the result when I add (-2) * delta to my original face. As you can see, it shows up
+    many "reverse" feature of my face ---- pointy chin, short and square face. The third image is the result when I add (2) * delta to my original face. 
+    Many of my face's feature get enhanced ---- square chin, very long face.
+     </p> 
+          <div class="row">
+    <img height="300px"src="me.jpg"> </img>
+    <img height="300px"src="extra_mean_negative2.png"> </img>
+      <img height="300px"src="extra_mean_positive2.png"> </img>
+      </div>
+    <h2> Extra credit: change ethnicity of my face. </h2>
+    <p> I download average african face from the internet (first image), and then morph my face with that average african face in three different ways: 
+    only shape (second), only appearance (third), and both shape and apperance (last). Here are the results:
+     </p> 
+     <div class="row">
+     <img height="300px"src="average_african_male.png"> </img>
+    <img height="300px"src="me_africa_shape.png"> </img>
+    <img height="300px"src="me_africa_appearace.png"> </img>
+      <img height="300px"src="me_africa_both.png"> </img>
+      </div>
+
+
+</body>
+</html>
